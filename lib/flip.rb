@@ -15,6 +15,7 @@
   declarable
   declaration_strategy
   definition
+  env_strategy
   facade
   feature_set
   forbidden
