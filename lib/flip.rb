@@ -10,7 +10,6 @@
 %w{
   abstract_strategy
   controller_filters
-  cookie_strategy
   database_strategy
   declarable
   declaration_strategy
@@ -19,6 +18,7 @@
   feature_set
   forbidden
   hash_strategy
+  cookie_strategy
 }.each { |name| require "flip/#{name}" }
 
 require "flip/engine" if defined?(Rails)

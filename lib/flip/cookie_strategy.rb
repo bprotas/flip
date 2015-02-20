@@ -1,49 +1,39 @@
 # Uses cookie to determine feature state.
 module Flip
-  class CookieStrategy < AbstractStrategy
+  class CookieStrategy < HashStrategy
 
     def description
       "Uses cookies to apply only to your session."
     end
 
-    def knows? definition
-      cookies.key? cookie_name(definition)
+    def self.cookies= cookies
+      @hash = cookies
     end
 
-    def on? definition
-      cookie = cookies[cookie_name(definition)]
-      cookie_value = cookie.is_a?(Hash) ? cookie['value'] : cookie
-      cookie_value === 'true'
+    def cookie_name definition
+      key_name definition
     end
 
-    def switchable?
-      true
+    def self.hash
+      @hash
     end
 
-    def switch! key, on
-      cookies[cookie_name(key)] = {
+    def hash
+      self.class.hash || {}
+    end
+
+    private
+
+    def set_value on
+      {
         'value' => (on ? "true" : "false"),
         'domain' => :all
       }
     end
 
-    def delete! key
-      cookies.delete cookie_name(key)
-    end
-
-    def self.cookies= cookies
-      @cookies = cookies
-    end
-
-    def cookie_name(definition)
-      definition = definition.key unless definition.is_a? Symbol
-      "flip_#{definition}"
-    end
-
-    private
-
-    def cookies
-      self.class.instance_variable_get(:@cookies) || {}
+    def value_is_on? value
+      check = value.is_a?(Hash) ? value['value'] : value
+      super(check)
     end
 
     # Include in ApplicationController to push cookies into CookieStrategy.

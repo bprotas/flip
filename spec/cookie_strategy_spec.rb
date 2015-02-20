@@ -16,7 +16,7 @@ describe Flip::CookieStrategy do
   end
   let(:strategy) do
     Flip::CookieStrategy.new.tap do |s|
-      s.stub(:cookies) { cookies }
+      s.stub(:hash) { cookies }
     end
   end
 
