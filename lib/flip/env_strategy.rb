@@ -24,7 +24,7 @@ module Flip
 
     def env_var_name definition
       definition = definition.key unless definition.is_a? Symbol
-      "flip_#{definition}"
+      "FLIP_#{definition.upcase}"
     end
   end
 end

@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Flip::EnvStrategy do
-  let(:environment) { { "flip_one" => "true", "flip_two" => "false" } }
+  let(:environment) { { "FLIP_ONE" => "true", "FLIP_TWO" => "false" } }
   let(:strategy) do
     Flip::EnvStrategy.new.tap do |s|
       s.stub(:env) { environment }
