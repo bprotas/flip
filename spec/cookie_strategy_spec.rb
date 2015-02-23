@@ -23,53 +23,8 @@ describe Flip::CookieStrategy do
   its(:description) { should be_present }
   it { should be_switchable }
 
-  describe "cookie interrogration" do
-    context "enabled feature" do
-      specify "#knows? is true" do
-        strategy.knows?(:one).should be_true
-      end
-      specify "#on? is true" do
-        strategy.on?(:one).should be_true
-      end
-    end
-    context "disabled feature" do
-      specify "#knows? is true" do
-        strategy.knows?(:two).should be_true
-      end
-      specify "#on? is false" do
-        strategy.on?(:two).should be_false
-      end
-    end
-    context "feature with no cookie present" do
-      specify "#knows? is false" do
-        strategy.knows?(:three).should be_false
-      end
-      specify "#on? is false" do
-        strategy.on?(:three).should be_false
-      end
-    end
-  end
-
-  describe "cookie manipulation" do
-    it "can switch known features on" do
-      strategy.switch! :one, true
-      strategy.on?(:one).should be_true
-    end
-    it "can switch unknown features on" do
-      strategy.switch! :three, true
-      strategy.on?(:three).should be_true
-    end
-    it "can switch features off" do
-      strategy.switch! :two, false
-      strategy.on?(:two).should be_false
-    end
-    it "can delete knowledge of a feature" do
-      strategy.delete! :one
-      strategy.on?(:one).should be_false
-      strategy.knows?(:one).should be_false
-    end
-  end
-
+  it_behaves_like "an interrogatable hash"
+  it_behaves_like "a switchable hash"
 end
 
 describe Flip::CookieStrategy::Loader do
